@@ -16,6 +16,7 @@
 
 package com.alibaba.nacos.common.utils;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 /**
@@ -31,7 +32,7 @@ public class RandomUtils {
     /**
      * Random Object for random method.
      */
-    private static final Random RANDOM = new Random();
+    private static final Random RANDOM = new SecureRandom();
     
     /**
      * Returns a random long within the specified range.

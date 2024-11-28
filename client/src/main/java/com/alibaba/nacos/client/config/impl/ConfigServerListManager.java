@@ -23,6 +23,7 @@ import com.alibaba.nacos.client.env.NacosClientProperties;
 import com.alibaba.nacos.client.utils.LogUtils;
 import com.alibaba.nacos.common.http.client.NacosRestTemplate;
 import com.alibaba.nacos.common.utils.StringUtils;
+import java.security.SecureRandom;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -162,7 +163,7 @@ public class ConfigServerListManager extends AbstractServerListManager {
         
         static class RandomizedServerAddress implements Comparable<RandomizedServerAddress> {
             
-            static Random random = new Random();
+            static Random random = new SecureRandom();
             
             String serverIp;
             

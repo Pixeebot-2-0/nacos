@@ -17,6 +17,7 @@
 package com.alibaba.nacos.client.selector;
 
 import com.alibaba.nacos.client.naming.selector.NamingSelectorWrapper;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class SelectorManagerTest {
     private static String generateRandomString(int minLength, int maxLength) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         
-        Random random = new Random();
+        Random random = new SecureRandom();
         int length = random.nextInt(maxLength - minLength + 1) + minLength;
         StringBuilder sb = new StringBuilder();
         

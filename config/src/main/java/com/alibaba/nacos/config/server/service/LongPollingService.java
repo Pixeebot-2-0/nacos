@@ -32,6 +32,7 @@ import com.alibaba.nacos.config.server.utils.RequestUtil;
 import com.alibaba.nacos.plugin.control.ControlManagerCenter;
 import com.alibaba.nacos.plugin.control.connection.request.ConnectionCheckRequest;
 import com.alibaba.nacos.plugin.control.connection.response.ConnectionCheckResponse;
+import java.security.SecureRandom;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.AsyncContext;
@@ -197,7 +198,7 @@ public class LongPollingService {
         if (!connectionCheckResponse.isSuccess()) {
             RpcScheduledExecutor.CONTROL_SCHEDULER.schedule(
                     () -> generate503Response(asyncContext, rsp, connectionCheckResponse.getMessage()),
-                    1000L + new Random().nextInt(2000), TimeUnit.MILLISECONDS);
+                    1000L + new SecureRandom().nextInt(2000), TimeUnit.MILLISECONDS);
             return;
         }
         

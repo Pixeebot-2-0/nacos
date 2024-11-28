@@ -25,6 +25,7 @@ import com.alibaba.nacos.client.naming.remote.http.NamingHttpClientManager;
 import com.alibaba.nacos.client.utils.LogUtils;
 import com.alibaba.nacos.common.JustForTest;
 import com.alibaba.nacos.common.http.client.NacosRestTemplate;
+import java.security.SecureRandom;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public class NamingServerListManager extends AbstractServerListManager {
         if (serverList.isEmpty()) {
             throw new NacosLoadException("serverList is empty,please check configuration");
         } else {
-            currentIndex.set(new Random().nextInt(serverList.size()));
+            currentIndex.set(new SecureRandom().nextInt(serverList.size()));
         }
         if (serverListProvider instanceof PropertiesListProvider) {
             if (serverList.size() == 1) {

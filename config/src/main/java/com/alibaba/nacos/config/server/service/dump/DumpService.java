@@ -43,6 +43,7 @@ import com.alibaba.nacos.core.namespace.repository.NamespacePersistService;
 import com.alibaba.nacos.persistence.datasource.DynamicDataSource;
 import com.alibaba.nacos.sys.env.EnvUtil;
 import com.alibaba.nacos.sys.utils.TimerContext;
+import java.security.SecureRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -229,7 +230,7 @@ public abstract class DumpService {
             }
             if (!EnvUtil.getStandaloneMode()) {
                 
-                Random random = new Random();
+                Random random = new SecureRandom();
                 long initialDelay = random.nextInt(INITIAL_DELAY_IN_MINUTE) + 10;
                 LogUtil.DEFAULT_LOG.warn("initialDelay:{}", initialDelay);
                 
