@@ -17,6 +17,7 @@
 package com.alibaba.nacos.sys.utils;
 
 import com.alibaba.nacos.common.utils.ByteUtils;
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.NullOutputStream;
@@ -178,7 +179,7 @@ public final class DiskUtils {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
             StringBuilder textBuilder = new StringBuilder();
             String lineTxt = null;
-            while ((lineTxt = reader.readLine()) != null) {
+            while ((lineTxt = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 textBuilder.append(lineTxt);
             }
             return textBuilder.toString();

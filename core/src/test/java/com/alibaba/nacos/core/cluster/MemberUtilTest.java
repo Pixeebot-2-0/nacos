@@ -18,6 +18,7 @@ package com.alibaba.nacos.core.cluster;
 
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.sys.env.EnvUtil;
+import io.github.pixee.security.BoundedLineReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -157,7 +158,7 @@ class MemberUtilTest {
         MemberUtil.syncToFile(Collections.singleton(originalMember));
         try (BufferedReader reader = new BufferedReader(new FileReader(EnvUtil.getClusterConfFilePath()))) {
             String line = "";
-            while ((line = reader.readLine()) != null) {
+            while ((line = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                 if (!line.startsWith("#")) {
                     assertEquals(IP + ":" + PORT, line.trim());
                     return;

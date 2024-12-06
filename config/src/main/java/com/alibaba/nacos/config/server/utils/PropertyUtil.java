@@ -18,6 +18,7 @@ package com.alibaba.nacos.config.server.utils;
 
 import com.alibaba.nacos.config.server.constant.PropertiesConstant;
 import com.alibaba.nacos.sys.env.EnvUtil;
+import io.github.pixee.security.BoundedLineReader;
 import org.slf4j.Logger;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -408,7 +409,7 @@ public class PropertyUtil implements ApplicationContextInitializer<ConfigurableA
         }
         File file = new File(limitMemoryFile);
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            long memoryLimit = Long.parseLong(reader.readLine().trim());
+            long memoryLimit = Long.parseLong(BoundedLineReader.readLine(reader, 5_000_000).trim());
             return Optional.of(memoryLimit / 1024L / 1024L);
         } catch (IOException | NumberFormatException ignored) {
             return Optional.empty();

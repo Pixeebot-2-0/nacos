@@ -17,6 +17,7 @@
 package com.alibaba.nacos.common.utils;
 
 import com.alibaba.nacos.api.common.Constants;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -126,7 +127,7 @@ public class IoUtils {
         BufferedReader reader = toBufferedReader(input);
         List<String> list = new ArrayList<>();
         while (true) {
-            String line = reader.readLine();
+            String line = BoundedLineReader.readLine(reader, 5_000_000);
             if (null != line) {
                 if (StringUtils.isNotEmpty(line)) {
                     list.add(line.trim());
