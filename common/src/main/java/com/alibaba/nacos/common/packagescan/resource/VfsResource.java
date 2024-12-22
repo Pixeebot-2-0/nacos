@@ -18,6 +18,8 @@ package com.alibaba.nacos.common.packagescan.resource;
 
 import com.alibaba.nacos.common.packagescan.util.AbstractAssert;
 import com.alibaba.nacos.common.packagescan.util.NestedIoException;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.File;
 import java.io.IOException;
@@ -113,7 +115,7 @@ public class VfsResource extends AbstractResource {
             }
         }
 
-        return new VfsResource(VfsUtils.getRelative(new URL(getUrl(), relativePath)));
+        return new VfsResource(VfsUtils.getRelative(Urls.create(getUrl(), relativePath, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS)));
     }
 
     @Override

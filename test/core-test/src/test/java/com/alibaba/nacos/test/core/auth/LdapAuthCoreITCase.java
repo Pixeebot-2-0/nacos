@@ -18,6 +18,8 @@ package com.alibaba.nacos.test.core.auth;
 
 import com.alibaba.nacos.Nacos;
 import com.alibaba.nacos.auth.config.AuthConfigs;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -60,7 +62,7 @@ class LdapAuthCoreITCase {
             TimeUnit.SECONDS.sleep(5L);
             String url = String.format("http://localhost:%d/", port);
             System.setProperty("nacos.core.auth.enabled", "true");
-            this.base = new URL(url);
+            this.base = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         }
     }
     

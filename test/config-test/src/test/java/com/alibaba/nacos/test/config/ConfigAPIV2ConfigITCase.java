@@ -23,6 +23,8 @@ import com.alibaba.nacos.test.base.ConfigCleanUtils;
 import com.alibaba.nacos.test.base.HttpClient4Test;
 import com.alibaba.nacos.test.base.Params;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,7 +102,7 @@ public class ConfigAPIV2ConfigITCase extends HttpClient4Test {
     @BeforeEach
     void setUp() throws Exception {
         String url = String.format("http://127.0.0.1:%d/", port);
-        this.base = new URL(url);
+        this.base = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     }
     
     @Test

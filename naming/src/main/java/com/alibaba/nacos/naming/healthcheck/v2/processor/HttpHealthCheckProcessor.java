@@ -31,6 +31,8 @@ import com.alibaba.nacos.naming.healthcheck.v2.HealthCheckTaskV2;
 import com.alibaba.nacos.naming.misc.HttpClientManager;
 import com.alibaba.nacos.naming.misc.SwitchDomain;
 import com.alibaba.nacos.naming.monitor.MetricsMonitor;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.springframework.stereotype.Component;
 
 import java.net.ConnectException;
@@ -84,8 +86,8 @@ public class HttpHealthCheckProcessor implements HealthCheckProcessorV2 {
             
             Http healthChecker = (Http) metadata.getHealthChecker();
             int ckPort = metadata.isUseInstancePortForCheck() ? instance.getPort() : metadata.getHealthyCheckPort();
-            URL host = new URL(HTTP_PREFIX + instance.getIp() + ":" + ckPort);
-            URL target = new URL(host, healthChecker.getPath());
+            URL host = Urls.create(HTTP_PREFIX + instance.getIp() + ":" + ckPort, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
+            URL target = Urls.create(host, healthChecker.getPath(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             Map<String, String> customHeaders = healthChecker.getCustomHeaders();
             Header header = Header.newInstance();
             header.addAll(customHeaders);

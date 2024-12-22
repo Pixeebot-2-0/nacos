@@ -20,6 +20,8 @@ import com.alibaba.nacos.common.packagescan.util.ResourceUtils;
 import com.alibaba.nacos.common.packagescan.util.AbstractAssert;
 import com.alibaba.nacos.common.utils.ClassUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -161,7 +163,7 @@ public class DefaultResourceLoader implements ResourceLoader {
         } else {
             try {
                 // Try to parse the location as a URL...
-                URL url = new URL(location);
+                URL url = Urls.create(location, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
                 return (ResourceUtils.isFileUrl(url) ? new FileUrlResource(url) : new UrlResource(url));
             } catch (MalformedURLException ex) {
                 // No URL -> resolve as resource path.
