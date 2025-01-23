@@ -17,6 +17,7 @@
 package com.alibaba.nacos.client.naming.utils;
 
 import com.alibaba.nacos.client.utils.ConcurrentDiskUtil;
+import java.nio.file.Files;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -39,7 +40,7 @@ class ConcurrentDiskUtilTest {
     
     @Test
     void testReadAndWrite() throws IOException {
-        File tempFile = File.createTempFile("aaa", "bbb");
+        File tempFile = Files.createTempFile("aaa", "bbb").toFile();
         String fileName = tempFile.getAbsolutePath();
         String content = "hello";
         String charset = "UTF-8";
@@ -50,7 +51,7 @@ class ConcurrentDiskUtilTest {
     
     @Test
     void testReadAndWrite2() throws IOException {
-        File tempFile = File.createTempFile("aaa", "bbb");
+        File tempFile = Files.createTempFile("aaa", "bbb").toFile();
         String content = "hello";
         String charset = "UTF-8";
         ConcurrentDiskUtil.writeFileContent(tempFile, content, charset);
