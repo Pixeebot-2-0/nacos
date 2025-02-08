@@ -16,6 +16,7 @@
 
 package com.alibaba.nacos.client.auth.ram.identify;
 
+import java.nio.file.Files;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -208,7 +209,7 @@ class CredentialWatcherTest {
     private boolean modifiedFile(URL url, boolean init) {
         File file = new File(url.getPath());
         boolean result;
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+        try (BufferedWriter bw = Files.newBufferedWriter(file.toPath())) {
             if (init) {
                 bw.write("accessKey=testAk\nsecretKey=testSk");
             } else {
