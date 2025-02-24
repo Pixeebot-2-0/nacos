@@ -17,6 +17,7 @@
 package com.alibaba.nacos.config.server.utils;
 
 import com.alibaba.nacos.config.server.constant.Constants;
+import io.github.pixee.security.ZipSecurity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,7 +123,7 @@ public class ZipUtils {
     public static UnZipResult unzip(byte[] source) {
         List<ZipItem> itemList = new ArrayList<>();
         ZipItem metaDataItem = null;
-        try (ZipInputStream zipIn = new ZipInputStream(new ByteArrayInputStream(source))) {
+        try (ZipInputStream zipIn = ZipSecurity.createHardenedInputStream(new ByteArrayInputStream(source))) {
             ZipEntry entry;
             while ((entry = zipIn.getNextEntry()) != null) {
                 if (entry.isDirectory()) {
