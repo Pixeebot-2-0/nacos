@@ -66,6 +66,7 @@ import com.alipay.sofa.jraft.rpc.impl.cli.CliClientServiceImpl;
 import com.alipay.sofa.jraft.util.BytesUtil;
 import com.alipay.sofa.jraft.util.Endpoint;
 import com.google.protobuf.Message;
+import java.security.SecureRandom;
 import org.springframework.util.CollectionUtils;
 
 import java.nio.ByteBuffer;
@@ -264,7 +265,7 @@ public class JRaftServer {
             RaftExecutor.executeByCommon(() -> registerSelfToCluster(groupName, localPeerId, configuration));
             
             // Turn on the leader auto refresh for this group
-            Random random = new Random();
+            Random random = new SecureRandom();
             long period = nodeOptions.getElectionTimeoutMs() + random.nextInt(5 * 1000);
             RaftExecutor.scheduleRaftMemberRefreshJob(() -> refreshRouteTable(groupName),
                     nodeOptions.getElectionTimeoutMs(), period, TimeUnit.MILLISECONDS);

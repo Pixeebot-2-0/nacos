@@ -19,6 +19,7 @@ package com.alibaba.nacos.client.naming.selector;
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.selector.NamingContext;
 import com.alibaba.nacos.api.naming.selector.NamingResult;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class DefaultNamingSelectorTest {
     @Test
     public void testSelect() {
         DefaultNamingSelector namingSelector = new DefaultNamingSelector(Instance::isHealthy);
-        Random random = new Random();
+        Random random = new SecureRandom();
         int total = random.nextInt(32) + 1;
         int health = random.nextInt(total);
         

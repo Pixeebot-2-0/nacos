@@ -18,6 +18,7 @@ package com.alibaba.nacos.client.naming.event;
 
 import com.alibaba.nacos.api.naming.pojo.Instance;
 import com.alibaba.nacos.api.naming.pojo.builder.InstanceBuilder;
+import java.security.SecureRandom;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class InstancesDiffTest {
     
     @Test
     public void testWithFullConstructor() {
-        Random random = new Random();
+        Random random = new SecureRandom();
         int addedCount = random.nextInt(32) + 1;
         int removedCount = random.nextInt(32) + 1;
         int modifiedCount = random.nextInt(32) + 1;
@@ -88,7 +89,7 @@ public class InstancesDiffTest {
     
     @Test
     public void testWithNoConstructor() {
-        Random random = new Random();
+        Random random = new SecureRandom();
         int addedCount = random.nextInt(32) + 1;
         int removedCount = random.nextInt(32) + 1;
         int modifiedCount = random.nextInt(32) + 1;
