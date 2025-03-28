@@ -19,6 +19,8 @@ package com.alibaba.nacos.common.packagescan.resource;
 import com.alibaba.nacos.common.packagescan.util.ResourceUtils;
 import com.alibaba.nacos.common.packagescan.util.AbstractAssert;
 import com.alibaba.nacos.common.utils.StringUtils;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.File;
 import java.io.IOException;
@@ -95,7 +97,7 @@ public class UrlResource extends AbstractFileResolvingResource {
     public UrlResource(String path) throws MalformedURLException {
         AbstractAssert.notNull(path, "Path must not be null");
         this.uri = null;
-        this.url = new URL(path);
+        this.url = Urls.create(path, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         this.cleanedUrl = getCleanedUrl(this.url, path);
     }
 
@@ -152,7 +154,7 @@ public class UrlResource extends AbstractFileResolvingResource {
         String cleanedPath = StringUtils.cleanPath(originalPath);
         if (!cleanedPath.equals(originalPath)) {
             try {
-                return new URL(cleanedPath);
+                return Urls.create(cleanedPath, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             } catch (MalformedURLException ex) {
                 // Cleaned URL path cannot be converted to URL -> take original URL.
             }
@@ -272,7 +274,7 @@ public class UrlResource extends AbstractFileResolvingResource {
         // # can appear in filenames, java.net.URL should not treat it as a fragment
         relativePath = StringUtils.replace(relativePath, "#", "%23");
         // Use the URL constructor for applying the relative path as a URL spec
-        return new URL(this.url, relativePath);
+        return Urls.create(this.url, relativePath, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
     }
 
     /**

@@ -22,6 +22,8 @@ import com.alibaba.nacos.common.utils.JacksonUtils;
 import com.alibaba.nacos.test.base.HttpClient4Test;
 import com.alibaba.nacos.test.base.Params;
 import com.fasterxml.jackson.databind.JsonNode;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 
@@ -91,7 +93,7 @@ public class AuthBase extends HttpClient4Test {
         TimeUnit.SECONDS.sleep(5L);
         String url = String.format("http://localhost:%d/", port);
         System.setProperty("nacos.core.auth.enabled", "true");
-        this.base = new URL(url);
+        this.base = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         accessToken = login();
         
         // Create a user:

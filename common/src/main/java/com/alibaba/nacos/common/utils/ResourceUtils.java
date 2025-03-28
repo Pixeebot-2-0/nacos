@@ -16,6 +16,8 @@
 
 package com.alibaba.nacos.common.utils;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -60,7 +62,7 @@ public class ResourceUtils {
         }
         
         try {
-            return new URL(resource);
+            return Urls.create(resource, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         } catch (MalformedURLException ex) {
             return new File(resource).toURI().toURL();
         }
