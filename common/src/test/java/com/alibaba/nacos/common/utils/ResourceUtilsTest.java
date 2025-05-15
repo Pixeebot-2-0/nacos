@@ -16,6 +16,7 @@
 
 package com.alibaba.nacos.common.utils;
 
+import java.nio.file.Files;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -47,7 +48,7 @@ class ResourceUtilsTest {
     
     @Test
     void testGetResourceUrlForFile() throws IOException {
-        File file = File.createTempFile("test", ".txt");
+        File file = Files.createTempFile("test", ".txt").toFile();
         try {
             URL url = ResourceUtils.getResourceUrl("file://" + file.getPath());
             assertNotNull(url);
@@ -58,7 +59,7 @@ class ResourceUtilsTest {
     
     @Test
     void testGetResourceUrlForFileWithoutProtocol() throws IOException {
-        File file = File.createTempFile("test", ".txt");
+        File file = Files.createTempFile("test", ".txt").toFile();
         try {
             URL url = ResourceUtils.getResourceUrl(file.getPath());
             assertNotNull(url);

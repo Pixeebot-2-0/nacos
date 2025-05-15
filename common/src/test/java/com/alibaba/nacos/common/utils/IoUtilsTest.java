@@ -16,6 +16,7 @@
 
 package com.alibaba.nacos.common.utils;
 
+import java.nio.file.Files;
 import org.apache.commons.io.Charsets;
 import org.junit.jupiter.api.Test;
 import sun.security.action.GetPropertyAction;
@@ -71,7 +72,7 @@ class IoUtilsTest {
     void testWriteStringToFile() throws IOException {
         File file = null;
         try {
-            file = File.createTempFile("test_writeStringToFile", ".txt");
+            file = Files.createTempFile("test_writeStringToFile", ".txt").toFile();
             IoUtils.writeStringToFile(file, "123", "UTF-8");
             List<String> actual = IoUtils.readLines(new FileReader(file));
             assertEquals(1, actual.size());
@@ -104,7 +105,7 @@ class IoUtilsTest {
     void testDeleteSuccess() throws IOException {
         File file = null;
         try {
-            file = File.createTempFile("test_deleteForFile", ".txt");
+            file = Files.createTempFile("test_deleteForFile", ".txt").toFile();
             assertTrue(file.exists());
             IoUtils.delete(file);
             assertFalse(file.exists());
@@ -132,7 +133,7 @@ class IoUtilsTest {
             String tmpDir = AccessController.doPrivileged(new GetPropertyAction("java.io.tmpdir"));
             File tmpDirFile = new File(tmpDir, "IoUtilsTest");
             tmpDirFile.mkdirs();
-            file = File.createTempFile("test_deleteForDirectory", ".txt", tmpDirFile);
+            file = Files.createTempFile(tmpDirFile.toPath(), "test_deleteForDirectory", ".txt").toFile();
             assertTrue(file.exists());
             IoUtils.delete(file.getParentFile());
             assertTrue(tmpDirFile.exists());
