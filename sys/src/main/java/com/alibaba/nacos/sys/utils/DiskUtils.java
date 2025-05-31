@@ -17,6 +17,7 @@
 package com.alibaba.nacos.sys.utils;
 
 import com.alibaba.nacos.common.utils.ByteUtils;
+import io.github.pixee.security.ZipSecurity;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.NullOutputStream;
@@ -457,7 +458,7 @@ public final class DiskUtils {
             throws IOException {
         try (final FileInputStream fis = new FileInputStream(sourceFile);
                 final CheckedInputStream cis = new CheckedInputStream(fis, checksum);
-                final ZipInputStream zis = new ZipInputStream(new BufferedInputStream(cis))) {
+                final ZipInputStream zis = ZipSecurity.createHardenedInputStream(new BufferedInputStream(cis))) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
                 final String fileName = entry.getName();
@@ -493,7 +494,7 @@ public final class DiskUtils {
         byte[] result;
         try (final FileInputStream fis = new FileInputStream(sourceFile);
                 final CheckedInputStream cis = new CheckedInputStream(fis, checksum);
-                final ZipInputStream zis = new ZipInputStream(new BufferedInputStream(cis));
+                final ZipInputStream zis = ZipSecurity.createHardenedInputStream(new BufferedInputStream(cis));
                 final ByteArrayOutputStream bos = new ByteArrayOutputStream(1024)) {
             while (zis.getNextEntry() != null) {
                 IOUtils.copy(zis, bos);
