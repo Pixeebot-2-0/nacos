@@ -49,6 +49,7 @@ import com.alibaba.nacos.common.utils.JacksonUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import java.security.SecureRandom;
 import org.apache.http.HttpStatus;
 
 import java.util.Collections;
@@ -371,7 +372,7 @@ public class NamingHttpClientProxy extends AbstractNamingClientProxy {
                 }
             }
         } else {
-            Random random = new Random();
+            Random random = new SecureRandom();
             int index = random.nextInt(servers.size());
             
             for (int i = 0; i < servers.size(); i++) {

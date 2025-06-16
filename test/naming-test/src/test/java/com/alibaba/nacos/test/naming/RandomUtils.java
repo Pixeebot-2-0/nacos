@@ -16,6 +16,7 @@
 
 package com.alibaba.nacos.test.naming;
 
+import java.security.SecureRandom;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
@@ -32,7 +33,7 @@ public class RandomUtils {
     
     private static final String STRING_POOL = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
-    private static Random rd = new Random();
+    private static Random rd = new SecureRandom();
     
     private static int UNICODE_START = 19968;
     
@@ -143,7 +144,7 @@ public class RandomUtils {
     
     public static String getRandomString(int length) {
         StringBuilder sb = new StringBuilder();
-        Random random = new Random();
+        Random random = new SecureRandom();
         int range = STRING_POOL.length();
         
         for (int i = 0; i < length; ++i) {
@@ -281,7 +282,7 @@ public class RandomUtils {
             }
             
             int[] result = new int[n];
-            Random rd = new Random();
+            Random rd = new SecureRandom();
             
             for (int i = 0; i < result.length; ++i) {
                 int index = Math.abs(rd.nextInt() % len--);

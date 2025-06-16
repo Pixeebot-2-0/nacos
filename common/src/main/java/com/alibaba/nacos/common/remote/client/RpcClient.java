@@ -41,6 +41,7 @@ import com.alibaba.nacos.common.utils.InternetAddressUtil;
 import com.alibaba.nacos.common.utils.LoggerUtils;
 import com.alibaba.nacos.common.utils.NumberUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
+import java.security.SecureRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -437,7 +438,7 @@ public abstract class RpcClient implements Closeable {
             return false;
         }
         int reTryTimes = rpcClientConfig.healthCheckRetryTimes();
-        Random random = new Random();
+        Random random = new SecureRandom();
         while (reTryTimes >= 0) {
             reTryTimes--;
             try {
