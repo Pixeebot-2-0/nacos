@@ -23,6 +23,7 @@ import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import com.alibaba.nacos.client.utils.ConcurrentDiskUtil;
 import com.alibaba.nacos.common.utils.JacksonUtils;
 import com.alibaba.nacos.common.utils.StringUtils;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -129,7 +130,7 @@ public class DiskCache {
                     new StringReader(ConcurrentDiskUtil.getFileContent(file, Charset.defaultCharset().toString())))) {
                 
                 String json;
-                while ((json = reader.readLine()) != null) {
+                while ((json = BoundedLineReader.readLine(reader, 5_000_000)) != null) {
                     try {
                         if (!json.startsWith("{")) {
                             continue;
